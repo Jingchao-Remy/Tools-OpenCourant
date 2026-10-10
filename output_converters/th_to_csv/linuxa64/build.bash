@@ -1,27 +1,29 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-#
-# check if exec directory exists, create if not
-#
-if [ ! -d ../../../exec ]
+if [[ -z ${CC} ]] && ! CC="$(command -v gcc 2>/dev/null || command -v clang 2>/dev/null || command -v cc 2>/dev/null)"
 then
-   mkdir ../../../exec
+    echo "no C compiler detected" >&2
+    echo "Please install gcc/clang or export CC with the name/path of your preferred compiler" >&2
+    exit 1
 fi
 
+#
+# create exec directory if it doesn't exist
+mkdir -p ../../../exec
 
- gcc -DLINUX -o ../../../exec/th_to_csv_linuxa64 ../src/th_to_csv.c
- export BUILD_RETURN_CODE=$?
- if [ $BUILD_RETURN_CODE -ne 0 ]
- then
-    echo " " 
-    echo "Build failed"
-    echo " " 
-    rm -f *.o
-    exit $BUILD_RETURN_CODE
- fi
+BUILD_RETURN_CODE=0
+BUILD_RESULT=succeeded
 
- echo " " 
- echo "Build succeeded"
- echo " "
- rm -f *.o
- exit 0
+"${CC}" -DLINUX -o ../../../exec/th_to_csv_linuxa64 ../src/th_to_csv.c || BUILD_RETURN_CODE=$?
+
+if (( BUILD_RETURN_CODE != 0 ))
+then
+    BUILD_RESULT=failed
+fi
+
+echo " " 
+echo "Build ${BUILD_RESULT}"
+echo " "
+rm -f *.o
+exit "${BUILD_RETURN_CODE}"
+
