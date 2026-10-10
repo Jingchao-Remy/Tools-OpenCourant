@@ -3,7 +3,7 @@
 if [[ -z ${CC} ]] && ! CC="$(command -v gcc 2>/dev/null || command -v clang 2>/dev/null || command -v cc 2>/dev/null)"
 then
     echo "no C compiler detected" >&2
-    echo "Please install gcc/clang or export CXX with the name/path of your preferred compiler" >&2
+    echo "Please install gcc/clang or export CC with the name/path of your preferred compiler" >&2
     exit 1
 fi
 
