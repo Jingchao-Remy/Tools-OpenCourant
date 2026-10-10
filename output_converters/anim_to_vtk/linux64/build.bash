@@ -21,7 +21,6 @@ then
     BUILD_RESULT=failed
 fi
 
- 
 echo " " 
 echo "Build ${BUILD_RESULT}"
 echo " "
