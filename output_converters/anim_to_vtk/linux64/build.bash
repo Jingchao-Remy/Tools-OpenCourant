@@ -26,3 +26,4 @@ echo "Build ${BUILD_RESULT}"
 echo " "
 rm -f *.o
 exit "${BUILD_RETURN_CODE}"
+
