@@ -105,7 +105,7 @@ int main( int argc, char *argv[] )
     ThPartNames =(char**)malloc(sizeof(char**)*nbPartVar);
     ThSubsNames =(char**)malloc(sizeof(char**)*nbSubsVar);
     ThGroupNames =(char**)malloc(sizeof(char**)*cptThGroupNames);
-    allData = malloc(sizeof(float*)*cptData);
+    allData = (float*)malloc(sizeof(float*)*cptData);
 /*-----------------------------
      READ DATA
 -----------------------------*/
@@ -1362,9 +1362,7 @@ void csvFileWrite(char* csvFilename,char* titleFilename,int *nbglobVar,int *nbPa
 }
 
 /***************************************************************************/
-void print_c_c(w,len)
-int *w;
-int len;
+void print_c_c(int *w,int len)
 {
     int i;
     printf("ICODE_C_%c",w[0]);
@@ -1374,10 +1372,7 @@ int len;
     printf("%c_\n",w[len-1]);
 } 
 /***************************************************************************/
-void print_c_c_to_char(w,len,title)
-int *w;
-int len;
-char *title;
+void print_c_c_to_char(int *w,int len,char *title)
 {
     int i;
     sprintf(title++,"%c",w[0]);
@@ -1387,38 +1382,27 @@ char *title;
     sprintf(title++,"%c",w[len-1]);
 } 
 /***************************************************************************/
-void print_i_c_to_char(w,len,title)
-int *w;
-int len;
-char *title;
+void print_i_c_to_char(int *w,int len,char *title)
 {
     sprintf(title,"%d",w[0]);
 } 
 /***************************************************************************/
-void print_i_c(w,len)
-int *w;
-int len;
+void print_i_c(int *w,int len)
 {
     printf("ICODE_I_%d_\n",*w);
 } 
 /***************************************************************************/
-void print_r_c(w,len)
-float *w;
-int len;
+void print_r_c(float *w,int len)
 {
     printf("ICODE_R_%f_\n",*w);
 } 
 /***************************************************************************/
-void print_db_c(w,len)
-double *w;
-int len;
+void print_db_c(double *w,int len)
 {
     printf("ICODE_DB_%g_\n",*w);
 } 
 /***************************************************************************/
-void read_r_c(w,len)
-float *w;
-int len;
+void read_r_c(float *w,int len)
 {
     int i, j, k, block, n;
     unsigned char buf[4*BUFLEN_CONV];
@@ -1442,8 +1426,7 @@ int len;
     }
 } /* end read_r_c */
 /***************************************************************************/
-    void read_i_c(w,len)
-    int *w, len;
+    void read_i_c(int *w,int len)
     {
         int i, j, k, block;
         unsigned char buf[4*BUFLEN_CONV];
@@ -1464,9 +1447,7 @@ int len;
         }
 } /* end read_i_c */
 /***************************************************************************/
-        void read_c_c(w,len)
-        int *w;
-        int len;
+        void read_c_c(int *w,int len)
         {
             int j;
             
@@ -1482,9 +1463,7 @@ int len;
             }
 } /* end read_c_c */
 /***************************************************************************/
-            void read_db_c(w,len)
-            double *w;
-            int len;
+            void read_db_c(double *w,int len)
             {
                 int i, j, c;
                 unsigned char octet[1000][8];
@@ -1504,8 +1483,7 @@ int len;
 
 } /* end read_db_c */
 /***************************************************************************/
-                void eor_c_read(len)
-                int *len;
+                void eor_c_read(int *len)
                 {
                     int i;
                     unsigned char octet[4];
@@ -1517,9 +1495,7 @@ int len;
                     IEEE_ASCII_to_integer(len,octet);
                 }
 /***************************************************************************/
-                void integer_to_IEEE_ASCII(entier,octet)
-                int entier;
-                unsigned char octet[4];
+                void integer_to_IEEE_ASCII(int entier,unsigned char octet[4])
                 {
                     octet[3] = entier & 0xff;
                     octet[2] = (entier >>  8)  & 0xff;
@@ -1527,9 +1503,7 @@ int len;
                     octet[0] = (entier >> 24)  & 0xff;
                 }
 /***************************************************************************/
-                void IEEE_ASCII_to_real(real,octet)
-                float *real;
-                unsigned char octet[4];
+                void IEEE_ASCII_to_real(float *real,unsigned char octet[4])
                 {
                     int exponent;
                     int sign;
@@ -1568,9 +1542,7 @@ int len;
 
 } /* end IEEE_ASCII_to_real */
 /***************************************************************************/
-                        void IEEE_ASCII_to_integer(entier,octet)
-                        int *entier;
-                        unsigned char octet[4];
+                        void IEEE_ASCII_to_integer(int *entier,unsigned char octet[4])
                         {
                             int result, a, b;
                             
@@ -1589,10 +1561,7 @@ int len;
                             
 } /* end IEEE_ASCII_to_integer */
 /***************************************************************************/
-                            void IEEE_ASCII_to_double(real,octet,len)
-                            double *real;
-                            unsigned char octet[1000][8];
-                            int len;
+                            void IEEE_ASCII_to_double(double *real,unsigned char octet[1000][8],int len)
                             {
                                 int exponent,i;
                                 int sign;
